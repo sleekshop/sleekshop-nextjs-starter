@@ -17,10 +17,11 @@ export default function getSession(req, res) {
     request: 'get_new_session'
   }))
     .then((response) => {
-      setCookies('session', response.data.code, { req, res, expires: response.data.expiration_date });
+      setCookies('session', response.data.code, { req, res, expires: new Date(response.data.expiration_date) });
       return res.status(200).json({expired: false})
     })
     .catch((error) => {
+      console.log(error);
       return res.status(403).json({expired: true, message: apiText.sessionExpired})
     })
   
