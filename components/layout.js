@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 
 import Navbar from './navbar';
+import Footer from './footer';
+import SideCart from './side-cart';
 
 export default function Layout({ children }) {
   const [expired, setExpired] = useState(true)
@@ -30,8 +32,9 @@ export default function Layout({ children }) {
     return (
       <>
         <Navbar/>
-        <main>{children}</main>
-        Footer
+        <SideCart/>
+        <main className="my-10">{children}</main>
+        <Footer/>
       </>
     )
   }

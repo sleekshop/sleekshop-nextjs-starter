@@ -7,7 +7,7 @@ import axios from 'axios'
 import numberFormat from '../utils/number-format'
 
 export default function Home() {
-
+  
   const [products, setProducts] = useState([])
 
   useEffect(() => {
