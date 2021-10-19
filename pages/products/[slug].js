@@ -6,12 +6,12 @@ import axios from 'axios'
 import numberFormat from '../../utils/number-format'
 import Loading from '../../components/loading'
 import ColorVariants from '../../components/color-variants'
-import { CartContext } from '../../utils/cart-context'
+import { useCart } from '../../context/cart-context'
 
 export default function Product() {
   const router = useRouter()
   const { slug } = router.query
-  const { cart, setCart } = useContext(CartContext);
+  const { cartItems, setCartItems, cartOpen, setCartOpen, loading, setLoading } = useCart();
 
   const [product, setProduct] = useState(null)
   const [activeImage, setActiveImage] = useState('')
@@ -30,6 +30,19 @@ export default function Product() {
       })
     }
   }, [slug])
+
+  const addToCart = () => {
+    
+    setCartOpen(true)
+    setLoading(true)
+
+    axios.post('/api/add-to-cart', {id: product.id, quantity: count})
+      .then(res => {
+        console.log(res);
+        setCartItems([...cartItems, { id: product.id, quantity: count }])
+      })
+
+  }
 
   if (product) {
     return (
@@ -58,7 +71,13 @@ export default function Product() {
                     {product.attributes.color.value && <ColorVariants product={product} />}
                   </div>
                   <div className="flex items-center mt-6">
-                      <button className="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">In den Warenkorb</button>
+                      <button 
+                        onClick={() => addToCart()} 
+                        className={`${loading ? 'bg-indigo-200 cursor-not-allowed' : 'bg-indigo-600'} px-8 py-2 text-white text-sm font-medium rounded focus:outline-none`}
+                        disabled={loading}
+                      >
+                        In den Warenkorb
+                      </button>
                   </div>
               </div>
           </div>
