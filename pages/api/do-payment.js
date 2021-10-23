@@ -9,14 +9,9 @@ export default function getProduct(req, res) {
   return axios.post(process.env.SERVER, qs.stringify({
     licence_username: process.env.LICENCE_USERNAME,
     licence_password: process.env.LICENCE_PASSWORD,
-    request: 'set_order_details',
+    request: 'do_payment',
     session: session,
-    id_payment_method: 3,
-    delivery_companyname: "sleekcommerce",
-    delivery_firstname: "test123",
-    delivery_lastname: "test456",
-    email: "hello@reich-michael.com",
-    phone: "name"
+    id_order: id
   }))
     .then((response) => {
       return res.status(200).json({...response.data})

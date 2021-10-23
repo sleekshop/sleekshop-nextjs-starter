@@ -16,7 +16,7 @@ export default function Home() {
     })
   }, [])
 
-  if (contents) {
+  if (contents && contents.attributes) {
     return (
       <div className="container mx-auto px-6">
         <h1 className="text-gray-700 text-2xl font-medium">{contents.attributes.headline.value}</h1>

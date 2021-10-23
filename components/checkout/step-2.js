@@ -10,7 +10,7 @@ export default function Step2({payments, activePayment, setActivePayment}) {
           {payments && Object.keys(payments).map(item => {
             if (item != 'object') {
               return (
-                <button onClick={() => setActivePayment(payments[item])} className={`flex items-center justify-between w-full bg-white rounded-md border-2 ${activePayment.id == payments[item].id && 'border-blue-500'} p-4 mb-2 focus:outline-none`}>
+                <button type="button" onClick={() => setActivePayment(payments[item])} className={`flex items-center justify-between w-full bg-white rounded-md border-2 ${activePayment.id == payments[item].id && 'border-blue-500'} p-4 mb-2 focus:outline-none`}>
                   <label className="flex items-center cursor-pointer" htmlFor={payments[item].id}>
                     <input 
                       type="radio" 

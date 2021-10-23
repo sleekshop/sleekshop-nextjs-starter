@@ -17,7 +17,7 @@ export default function Checkout() {
       const cartRes = await axios.get('/api/get-cart')
       await setPayments(paymentRes.data)
       await setCartItems(cartRes.data)
-      await setActivePayment(paymentRes.data.Cash)
+      await setActivePayment(Object.values(paymentRes.data)[1])
     } catch (error) {
       console.error(error)
     }
@@ -28,8 +28,6 @@ export default function Checkout() {
 
     if (currentStep == 1) {
       setCurrentStep(currentStep + 1)
-      axios.post('/api/set-order-details')
-        .then(res => console.log(res))
     }
 
     if (currentStep == 2) {
@@ -44,7 +42,23 @@ export default function Checkout() {
         delivery_city
       } = e.target.elements;
 
+      axios.post('/api/set-order-details')
+        .then(res => {
+          const id = res.data.order_number
+          axios.post('/api/do-payment', {id: id})
+            .then(res => {
+              console.log(res)
+              setCurrentStep(currentStep + 1)
+            })
 
+        })
+    }
+
+    if (currentStep == 3) {
+      axios.post('/api/checkout')
+      .then(res => {
+        console.log(res)
+      })
     }
 
   }

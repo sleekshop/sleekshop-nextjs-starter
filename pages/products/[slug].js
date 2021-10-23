@@ -5,7 +5,7 @@ import axios from 'axios'
 
 import numberFormat from '../../utils/number-format'
 import Loading from '../../components/loading'
-import ColorVariants from '../../components/color-variants'
+import SizeVariants from '../../components/size-variants'
 import { useCart } from '../../context/cart-context'
 
 export default function Product() {
@@ -25,6 +25,7 @@ export default function Product() {
         }
       })
       .then(res => {
+        console.log(res.data);
         setProduct(res.data)
         setActiveImage(res.data.attributes.img1.value)
       })
@@ -38,7 +39,6 @@ export default function Product() {
 
     axios.post('/api/add-to-cart', {id: product.id, quantity: count})
       .then(res => {
-        console.log(res);
         setCartItems([...cartItems, { id: product.id, quantity: count }])
       })
 
@@ -68,7 +68,7 @@ export default function Product() {
                       </div>
                   </div>
                   <div className="mt-3">
-                    {product.attributes.color.value && <ColorVariants product={product} />}
+                    {product.attributes.size && product.attributes.size.value && <SizeVariants product={product} />}
                   </div>
                   <div className="flex items-center mt-6">
                       <button 

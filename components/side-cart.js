@@ -16,6 +16,7 @@ export default function SideCart() {
   useEffect(async () => {
     try {
       const cart = await axios.get('/api/get-cart');
+      console.log(cart);
       await setProducts(cart.data.contents)
       await setCart(cart.data)
       setLoading(false)
@@ -34,6 +35,8 @@ export default function SideCart() {
     }
   }
 
+  console.log(products);
+
   return (
     <div className={`fixed right-0 top-0 max-w-xs w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white border-l-2 border-gray-300 ${cartOpen ? 'translate-x-0 ease-out' : 'translate-x-full ease-in'}`}>
       <div className="flex items-center justify-between">
@@ -45,7 +48,7 @@ export default function SideCart() {
       <hr className="my-3" />
       {}
       {!loading ? <>
-        {products.map(item => {
+        {products && products.map(item => {
           return (
             <div key={item.id} className="flex justify-between mt-6">
               <div className="flex">
