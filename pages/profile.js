@@ -9,9 +9,7 @@ export default function Profile() {
   const router = useRouter()
 
   useEffect(() => {
-    console.log(user);
     if (user.status != "active") {
-      console.log('test');
       router.push('/login')
     }
   }, [user])
@@ -44,12 +42,22 @@ export default function Profile() {
       })
   }
 
+  const logout = (e) => {
+    e.preventDefault()
+    axios.post('/api/logout')
+      .then(res => {
+        router.push('/login')
+        setUser({status: 'inacitve'})
+      })
+  }
+
   if (user.status == "active") {
     return (
       <div className="container mx-auto px-6">
         <div className="flex">
           <div className="w-4/12">
             <h1 className="text-gray-700 text-2xl font-medium">Hi, {user.attributes.firstname.value}</h1>
+            <a href="#" onClick={logout}>Logout</a>
           </div>
           <div className="w-8/12">
             <form onSubmit={saveUser}>

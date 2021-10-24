@@ -9,10 +9,10 @@ export default function Login() {
   const router = useRouter()
 
   useEffect(() => {
-    if (user.status == "active") {
+    if (user.status == "active" || user.status == "SUCCESS") {
       router.push('/profile')
     }
-  }, [])
+  }, [user])
 
   const loginSubmit = (e) => {
     e.preventDefault()
@@ -27,7 +27,11 @@ export default function Login() {
       password: password.value
     })
       .then(res => {
-        console.log(res);
+        if (res.data.status == "SUCCESS") {
+          axios.post('/api/get-user-data')
+            .then(res => setUser(res.data))
+        }
+        router.push('/profile')
       })
   }
 
