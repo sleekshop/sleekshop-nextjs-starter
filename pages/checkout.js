@@ -6,7 +6,11 @@ import Step1 from "../components/checkout/step-1"
 import Step2 from "../components/checkout/step-2"
 import Step3 from "../components/checkout/step-3"
 
+import {useUser} from "../context/user-context"
+
 export default function Checkout() {
+  const {user} = useUser()
+
   const [payments, setPayments] = useState(null)
   const [cartItems, setCartItems] = useState(null)
   const [currentStep, setCurrentStep] = useState(1)
@@ -86,7 +90,7 @@ export default function Checkout() {
           </div>
           <form className="mt-8" onSubmit={formSubmit}>
             <div className={currentStep == 1 ? '' : 'hidden'}>
-              <Step1/>
+              <Step1 user={user}/>
             </div>
 
             <div className={currentStep == 2 ? '' : 'hidden'}>

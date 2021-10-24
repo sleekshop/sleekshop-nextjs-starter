@@ -1,16 +1,20 @@
+import Link from "next/link"
 import { useState } from "react"
 
-export default function Step1() {
+export default function Step1({user}) {
   const [userType, setUserType] = useState('privat')
   return (
     <div>
       <div className="mt-8">
+        {user.status == "active" && <div className="mb-4">
+          <p className="text-gray-600 text-sm">Sie sind eingeloggt als {user.attributes.firstname.value} <Link href="/profile"><a className="mt-3 inline-block border-b-2 border-blue-600 text-gray-600 text-sm" href="#">Profil ansehen</a></Link></p>
+        </div>}
 
-        <div className="mb-4 flex">
+        {user.status != "active" && <div className="mb-4 flex">
           <label className="block w-full">
             <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="E-Mail" name="email" required/>
           </label>
-        </div>
+        </div>}
 
         <div className="flex mb-4">
           <div>
@@ -34,28 +38,28 @@ export default function Step1() {
 
         <div className="mt-4 flex">
           <label className="block w-6/12">
-            <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="Vorname" name="delivery_firstname" required/>
+            <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="Vorname" name="delivery_firstname" defaultValue={user.attributes && user.attributes.firstname.value} required/>
           </label>
           <label className="block w-6/12 ml-3">
-            <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="Nachname" name="delivery_lastname" required/>
+            <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="Nachname" name="delivery_lastname" defaultValue={user.attributes && user.attributes.lastname.value} required/>
           </label>
         </div>
 
         <div className="mt-4 flex">
           <label className="block flex-1">
-            <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="Straße" name="delivery_street" required/>
+            <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="Straße" name="delivery_street" defaultValue={user.attributes && user.attributes.street.value} required/>
           </label>
           <label className="block  ml-3 w-3/12">
-            <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="Nummer" name="delivery_number" required/>
+            <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="Nummer" name="delivery_number" defaultValue={user.attributes && user.attributes.number.value} required/>
           </label>
         </div>
 
         <div className="mt-4 flex">
           <label className="block w-3/12">
-            <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="PLZ" name="delivery_zip" required/>
+            <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="PLZ" name="delivery_zip" defaultValue={user.attributes && user.attributes.zip.value} required/>
           </label>
           <label className="block flex-1 ml-3">
-            <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="Ort" name="delivery_city" required/>
+            <input type="text" className="block w-full bg-white rounded-md border p-2 focus:outline-none" placeholder="Ort" name="delivery_city" defaultValue={user.attributes && user.attributes.city.value} required/>
           </label>
         </div>
       </div>

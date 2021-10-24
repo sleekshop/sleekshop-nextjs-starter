@@ -4,11 +4,13 @@ import Link from 'next/link'
 import axios from 'axios';
 
 import { useCart } from '../context/cart-context'
+import { useUser } from '../context/user-context'
 import Loading from '../components/loading'
 import numberFormat from '../utils/number-format'
 
 export default function SideCart() {
   const {cartItems, setCartItems, cartOpen, setCartOpen, loading, setLoading} = useCart();
+  const {user} = useUser()
 
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState({})
@@ -78,7 +80,7 @@ export default function SideCart() {
 
 
 
-      <Link href="/checkout">
+      <Link href={user.status == 'active' ? "/checkout" : '/login?proceedOrder=true' }>
         <a className="flex items-center justify-center mt-4 px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
           <span>Checkout</span>
           <svg className="h-5 w-5 mx-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>

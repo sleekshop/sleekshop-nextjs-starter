@@ -57,7 +57,7 @@ export default function Profile() {
         <div className="flex">
           <div className="w-4/12">
             <h1 className="text-gray-700 text-2xl font-medium">Hi, {user.attributes.firstname.value}</h1>
-            <a href="#" onClick={logout}>Logout</a>
+            <a href="#" onClick={logout} className="text-gray-600 text-sm">Logout</a>
           </div>
           <div className="w-8/12">
             <form onSubmit={saveUser}>
