@@ -16,10 +16,9 @@ export default function SideCart() {
   useEffect(async () => {
     try {
       const cart = await axios.get('/api/get-cart');
-      console.log(cart);
       await setProducts(cart.data.contents)
       await setCart(cart.data)
-      setLoading(false)
+      await setLoading(false)
     } catch (err) {
       console.error(err);
     }
@@ -34,8 +33,6 @@ export default function SideCart() {
       console.error(err);
     }
   }
-
-  console.log(products);
 
   return (
     <div className={`fixed right-0 top-0 max-w-xs w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white border-l-2 border-gray-300 ${cartOpen ? 'translate-x-0 ease-out' : 'translate-x-full ease-in'}`}>

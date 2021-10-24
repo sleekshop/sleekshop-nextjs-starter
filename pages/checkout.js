@@ -4,12 +4,14 @@ import { useEffect, useState } from "react"
 import CartProducts from "../components/cart-products"
 import Step1 from "../components/checkout/step-1"
 import Step2 from "../components/checkout/step-2"
+import Step3 from "../components/checkout/step-3"
 
 export default function Checkout() {
   const [payments, setPayments] = useState(null)
   const [cartItems, setCartItems] = useState(null)
   const [currentStep, setCurrentStep] = useState(1)
   const [activePayment, setActivePayment] = useState(null)
+  const [orderComplete, setOrderComplete] = useState(false)
 
   useEffect(async () => {
     try {
@@ -47,23 +49,23 @@ export default function Checkout() {
           const id = res.data.order_number
           axios.post('/api/do-payment', {id: id})
             .then(res => {
-              console.log(res)
               setCurrentStep(currentStep + 1)
+              if (res.data.object != "error") {
+                axios.post('/api/checkout')
+                .then(res => {
+                  if (res.data.status == "success") {
+                    setOrderComplete(true)
+                  }
+                  
+                })
+              }
             })
 
         })
     }
 
-    if (currentStep == 3) {
-      axios.post('/api/checkout')
-      .then(res => {
-        console.log(res)
-      })
-    }
-
   }
 
-  console.log(payments);
   return (
     <div className="container mx-auto px-6">
       <h3 className="text-gray-700 text-2xl font-medium">Kasse</h3>
@@ -90,8 +92,10 @@ export default function Checkout() {
             <div className={currentStep == 2 ? '' : 'hidden'}>
               <Step2 payments={payments} activePayment={activePayment} setActivePayment={setActivePayment}/>
             </div>
-            
-            
+
+            <div className={currentStep == 3 ? '' : 'hidden'}>
+              <Step3 orderComplete={orderComplete} />
+            </div>
 
             <div className="flex items-center justify-between mt-8">
               {currentStep != 1 ? <button onClick={() => setCurrentStep(currentStep - 1)} className="flex items-center text-gray-700 text-sm font-medium rounded hover:underline focus:outline-none">
