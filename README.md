@@ -1,29 +1,43 @@
-# Next.js + Tailwind CSS Example
+# Sleekshop Next.js Starter Template
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v2.2)](https://blog.tailwindcss.com/tailwindcss-2-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+This is a starting point for everyone who wants to work with [Sleekshop](https://sleekshop.io) in a neat React.js Framework called [Next.js](https://nextjs.org/).
 
-It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-mode) for Tailwind CSS.
+Easy start for you because we don't use many depencies and you can build on top of this template.
+
+For any issues please report them in this git. We will review them and continue to improve this template.[ Write issue or improvement.](https://github.com/sleekshop/sleekshop-nextjs-starter/issues)
 
 ## Preview
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+Preview the example live on [Heroku](https://sleekshop-nextjs.herokuapp.com/):
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+## Tools used
 
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+- React.js `17.0.2` [Docs](https://reactjs.org/docs/getting-started.html)
+- Next.js `11.1.2` [Docs](https://nextjs.org/docs/getting-started)
+- Tailwindcss `2.2.4` [Docs](https://tailwindcss.com/docs)
 
 ## How to use
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+Execute install to bootstrap the example:
 
 ```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
+npm install
 # or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
+yarn
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+Next you need to add credentials to your `.env`. You can find these in your Sleekshop Application under Administration > Settings > API
+
+```
+SERVER="https://demo.sleekshop.net/srv/service/"
+LICENCE_USERNAME="demo_NBSqhrcrhMci15Ir9UWI"
+LICENCE_PASSWORD="s9vmrbwT23B7bmjR4Vmz"
+```
+
+## Known issues
+
+- [ ] Add delivery costs on checkout
+- [ ] Send email after order success
+- [ ] Tidy up of unused imports
+- [ ] Cypress testing
+- [ ] Standalone JavaScript SDK
