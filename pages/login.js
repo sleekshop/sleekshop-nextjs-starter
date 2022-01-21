@@ -29,6 +29,7 @@ export default function Login() {
       password: password.value
     })
       .then(res => {
+        console.log(res);
         if (res.data.status == "SUCCESS") {
           axios.post('/api/get-user-data')
             .then(res => setUser(res.data))
@@ -57,12 +58,12 @@ export default function Login() {
       password2: password2.value
     })
 
-    const msg = await axios.post('https://www.sleekshop.io/send-message', {
-      email: email.value,
-      password: password.value,
-    })
+    // const msg = await axios.post('https://www.sleekshop.io/send-message', {
+    //   email: email.value,
+    //   password: password.value,
+    // })
 
-    console.log(res, msg);
+    console.log(res);
   } 
 
   return (

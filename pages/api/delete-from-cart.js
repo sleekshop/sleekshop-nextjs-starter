@@ -2,7 +2,7 @@ import { getCookie } from 'cookies-next';
 import axios from "axios";
 import qs from "qs";
 
-export default function getProduct(req, res) {
+export default function deleteFromCart(req, res) {
   const { id } = req.body;
   const session = getCookie('session', { req, res });
 
