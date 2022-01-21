@@ -10,7 +10,7 @@ export default function getProduct(req, res) {
     licence_username: process.env.LICENCE_USERNAME,
     licence_password: process.env.LICENCE_PASSWORD,
     request: 'get_content_details',
-    id_content: 5,
+    id_content: id,
     language: "de_DE",
     country: "DE"
   }))

@@ -9,18 +9,21 @@ export default function Home() {
   const [contents, setContents] = useState(null)
 
   useEffect(() => {
-    axios.get('/api/get-contents')
-    .then(res => {
-      setContents(res.data)
-      console.log(res);
+    axios.get('/api/get-contents', {
+      params: {
+        id: 21
+      }
     })
+      .then(res => {
+        setContents(res.data)
+      })
   }, [])
 
   if (contents && contents.attributes) {
     return (
       <div className="container mx-auto px-6">
         <h1 className="text-gray-700 text-2xl font-medium">{contents.attributes.headline.value}</h1>
-        <img src={contents.attributes.img.value} alt="" />
+        <div dangerouslySetInnerHTML={{ __html: contents.attributes.content.value }} />
       </div>
     )
   } else {

@@ -58,12 +58,12 @@ export default function Product() {
             <div className="mt-2">
               <label className="text-gray-700 text-sm" htmlFor="count">Anzahl:</label>
               <div className="flex items-center mt-1">
-                <button className="text-gray-500 focus:outline-none focus:text-gray-600" onClick={() => setCount(count + 1)}>
-                  <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </button>
-                <span className="text-gray-700 text-lg mx-2 w-5 text-center">{count}</span>
                 <button className={`${count == 1 ? 'text-gray-200' : 'text-gray-500'} focus:outline-none focus:text-gray-600`} onClick={() => setCount(count - 1)} disabled={count == 1}>
                   <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </button>
+                <span className="text-gray-700 text-lg mx-2 w-5 text-center">{count}</span>
+                <button className="text-gray-500 focus:outline-none focus:text-gray-600" onClick={() => setCount(count + 1)}>
+                  <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </button>
               </div>
             </div>
