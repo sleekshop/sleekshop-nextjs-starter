@@ -2,9 +2,11 @@ import { setCookies, getCookie } from 'cookies-next';
 import axios from "axios";
 import qs from "qs";
 
-export default function getProduct(req, res) {
-  const { id, quantity, attributes } = req.body;
+export default function doPayment(req, res) {
+  const { id } = req.body;
   const session = getCookie('session', { req, res });
+
+  console.log(id);
 
   return axios.post(process.env.SERVER, qs.stringify({
     licence_username: process.env.LICENCE_USERNAME,

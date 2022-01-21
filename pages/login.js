@@ -13,6 +13,7 @@ export default function Login() {
   const router = useRouter()
   const { proceedOrder } = router.query
 
+  // TODO: This should be on SSR
   useEffect(() => {
     if (user.status == "active") {
       router.push('/profile')

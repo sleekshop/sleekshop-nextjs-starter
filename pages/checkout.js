@@ -5,17 +5,21 @@ import CartProducts from "../components/cart-products"
 import Step1 from "../components/checkout/step-1"
 import Step2 from "../components/checkout/step-2"
 import Step3 from "../components/checkout/step-3"
+import Loading from "../components/loading"
 
 import {useUser} from "../context/user-context"
 
 export default function Checkout() {
   const {user} = useUser()
 
+  const [orderDetails, setOrderDetails] = useState(null)
   const [payments, setPayments] = useState(null)
   const [cartItems, setCartItems] = useState(null)
   const [currentStep, setCurrentStep] = useState(1)
   const [activePayment, setActivePayment] = useState(null)
+
   const [orderComplete, setOrderComplete] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(async () => {
     try {
@@ -36,6 +40,8 @@ export default function Checkout() {
       setCurrentStep(currentStep + 1)
     }
 
+    console.log('formSubmit');
+
     if (currentStep == 2) {
       const {
         email,
@@ -48,26 +54,52 @@ export default function Checkout() {
         delivery_city
       } = e.target.elements;
 
-      axios.post('/api/set-order-details')
+      // TODO: update order details when a order is already set and not checked out
+      axios.post('/api/set-order-details', {
+        email: user ? user.email : email.value,
+        delivery_companyname: delivery_companyname && delivery_companyname.value,
+        delivery_firstname: delivery_firstname && delivery_firstname.value,
+        delivery_lastname: delivery_lastname && delivery_lastname.value,
+        delivery_street: delivery_street && delivery_street.value,
+        delivery_number: delivery_number && delivery_number.value,
+        delivery_zip: delivery_zip && delivery_zip.value,
+        delivery_city: delivery_city && delivery_city.value,
+        id_payment_method: activePayment.id
+      })
         .then(res => {
-          const id = res.data.order_number
-          axios.post('/api/do-payment', {id: id})
-            .then(res => {
-              setCurrentStep(currentStep + 1)
-              if (res.data.object != "error") {
-                axios.post('/api/checkout')
-                .then(res => {
-                  if (res.data.status == "success") {
-                    setOrderComplete(true)
-                  }
-                  
-                })
-              }
-            })
-
+          console.log(res);
+          setOrderDetails(res.data)
+          setCurrentStep(currentStep + 1)
         })
     }
 
+    if (currentStep == 3) {
+      axios.post('/api/do-payment', {id: parseInt(orderDetails.order_number)})
+      .then(res => {
+        setLoading(true)
+        console.log(res);
+        if (res.data.object != "error") {
+          axios.post('/api/checkout')
+          .then(res => {
+            if (res.data.status == "success") {
+              setOrderComplete(true)
+            }
+          })
+        }
+      })
+    }
+  }
+
+  if (loading) {
+    return (
+      <Loading/>
+    )
+  }
+
+  if (orderComplete) {
+    return (
+      <Alert type="SUCCESS" headline="Bestellung war erfolgreich" />
+    )
   }
 
   return (
@@ -98,17 +130,17 @@ export default function Checkout() {
             </div>
 
             <div className={currentStep == 3 ? '' : 'hidden'}>
-              <Step3 orderComplete={orderComplete} />
+              <Step3 orderDetails={orderDetails} />
             </div>
 
             <div className="flex items-center justify-between mt-8">
-              {currentStep != 1 ? <button onClick={() => setCurrentStep(currentStep - 1)} className="flex items-center text-gray-700 text-sm font-medium rounded hover:underline focus:outline-none">
+              {currentStep != 1 ? <button type="button" onClick={() => setCurrentStep(currentStep - 1)} className="flex items-center text-gray-700 text-sm font-medium rounded hover:underline focus:outline-none">
                 <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M7 16l-4-4m0 0l4-4m-4 4h18"></path></svg>
                 <span className="mx-2">Zurück</span>
               </button> : <div></div>}
 
               <button type="submit" className="flex items-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                <span>Weiter</span>
+                <span>{currentStep == 3 ? 'Bestellung abschicken' : 'Weiter'}</span>
                 <svg className="h-5 w-5 mx-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
               </button>
             </div>

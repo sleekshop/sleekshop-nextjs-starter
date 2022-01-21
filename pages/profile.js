@@ -28,7 +28,7 @@ export default function Profile() {
 
     axios.post('/api/set-user-data', {
       firstname: firstname.value,
-      lastname: lastname.valu,
+      lastname: lastname.value,
       street: street.value,
       number: number.value,
       zip: zip.value,

@@ -3,6 +3,7 @@ import { useState } from "react"
 
 export default function Step1({user}) {
   const [userType, setUserType] = useState('privat')
+  const [deliveryType, setDeliveryType] = useState('free')
   return (
     <div>
       <div className="mt-8">
@@ -68,16 +69,24 @@ export default function Step1({user}) {
         <h4 className="text-sm text-gray-500 font-medium">Lieferung</h4>
         <div className="mt-6">
 
-          <button className="flex items-center justify-between w-full bg-white rounded-md border-2 border-blue-500 p-4 focus:outline-none">
+          <button 
+            className={`flex items-center justify-between w-full bg-white rounded-md p-4 focus:outline-none cursor-pointer mb-4 ${deliveryType == 'free' ? 'border-blue-500 border-2' : 'border'}`}
+            onClick={() => setDeliveryType('free')}
+            type="button"
+          >
             <label className="flex items-center">
-              <input type="radio" className="form-radio h-5 w-5 text-blue-600" /><span className="ml-2 text-sm text-gray-700">Standard</span>
+              <input type="radio" className="form-radio h-5 w-5 text-blue-600" checked={deliveryType == 'free'} /><span className="ml-2 text-sm text-gray-700">Standard</span>
             </label>
             <span className="text-gray-600 text-sm">Kostenlos</span>
           </button>
 
-          <button className="mt-3 flex items-center justify-between w-full bg-white rounded-md border p-4 focus:outline-none">
+          <button
+            className={`flex items-center justify-between w-full bg-white rounded-md p-4 focus:outline-none cursor-pointer ${deliveryType == 'express' ? 'border-blue-500 border-2' : 'border'}`}
+            onClick={() => setDeliveryType('express')}
+            type="button"
+          >
             <label className="flex items-center">
-              <input type="radio" className="form-radio h-5 w-5 text-blue-600" /><span className="ml-2 text-sm text-gray-700">Express</span>
+              <input type="radio" className="form-radio h-5 w-5 text-blue-600" checked={deliveryType == 'express'} /><span className="ml-2 text-sm text-gray-700">Express</span>
             </label>
             <span className="text-gray-600 text-sm">15,00 €</span>
           </button>
