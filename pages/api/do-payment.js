@@ -16,6 +16,7 @@ export default function doPayment(req, res) {
     id_order: id
   }))
     .then((response) => {
+      console.log(response);
       return res.status(200).json({...response.data})
     })
     .catch((error) => {

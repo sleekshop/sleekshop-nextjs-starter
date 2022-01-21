@@ -6,6 +6,7 @@ import Step1 from "../components/checkout/step-1"
 import Step2 from "../components/checkout/step-2"
 import Step3 from "../components/checkout/step-3"
 import Loading from "../components/loading"
+import Alert from "../components/alert"
 
 import {useUser} from "../context/user-context"
 
@@ -81,8 +82,10 @@ export default function Checkout() {
         if (res.data.object != "error") {
           axios.post('/api/checkout')
           .then(res => {
+            console.log(res);
             if (res.data.status == "success") {
               setOrderComplete(true)
+              setLoading(false)
             }
           })
         }
@@ -97,8 +100,12 @@ export default function Checkout() {
   }
 
   if (orderComplete) {
+    console.log(orderDetails);
     return (
-      <Alert type="SUCCESS" headline="Bestellung war erfolgreich" />
+      <div className="container mx-auto px-6">
+        <Alert type="SUCCESS" headline="Bestellung war erfolgreich" message={`Bestellnummer: ${orderDetails.order_number}`} />
+      </div>
+      
     )
   }
 
